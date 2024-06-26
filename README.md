@@ -41,7 +41,7 @@ The main objective is to derive mathematical models for each control system. The
 
 ## General Solution
 
-The project includes three code files located in the `src` folder:
+The project includes three code files located in the `src/arduino` folder:
 
 ### 1. `model_0.ino`
 
