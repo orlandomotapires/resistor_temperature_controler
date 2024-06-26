@@ -11,9 +11,9 @@ This project aims to build an automatic controller for the temperature of a resi
 
 ## Theoretical Approach
 
-Throughout the constant evolution of technology, the need for controlling industrial processes has always been prevalent. The development of increasingly specialized control methods has progressed alongside their growing necessity across various industrial sectors.
+Throughout the continuous evolution of technology, the need to control industrial processes has always been prevalent. The development of increasingly specialized control methods has progressed alongside their growing necessity across various industrial sectors.
 
-Among these control methods, temperature regulation stands out as one of the most crucial and well-established. It is responsible for maintaining optimal operational conditions for equipment such as electronic devices, which require precise temperature control to ensure efficiency and longevity. For instance, a deviation of 30 degrees Kelvin from the optimal operating range can significantly impact the efficiency of electronic components. Figure 1 illustrates the relationship between temperature (T) and electrical resistance (R), showing that a 30-degree Kelvin increase causes a 70% decrease in resistive capacity [1].
+Among these methods, temperature regulation stands out as one of the most crucial and well-established. It is responsible for maintaining optimal operational conditions for equipment such as electronic devices, which require precise temperature control to ensure efficiency and longevity. For instance, a deviation of 30 degrees Kelvin from the optimal operating range can significantly impact the efficiency of electronic components. Figure 1 illustrates the relationship between temperature (T) and electrical resistance (R), showing that a 30-degree Kelvin increase causes a 70% decrease in resistive capacity [1].
 
 **Figure 1:** Effect of temperature variation (T) on electrical resistance (R).
 
@@ -41,22 +41,28 @@ The main objective is to derive mathematical models for each control system. The
 
 ## General Solution
 
-The project includes three code files located in the `src/arduino` folder:
+The project includes MATLAB files in each strategy's folder within the `src` directory, used for plotting graphs and calculating the transfer functions for controlling the resistor's temperature.
 
-### 1. `model_0.ino`
+## Model 1
 
-This code evaluates the fan's response to different PWM values, monitoring its RPM to assess how quickly it adjusts to changes in PWM signals.
-- **First Approach:** Control the fan and analyze its response.
+### First Approach: Control the fan and analyze its response
 
-### 2. `model_1.ino`
+- model_1.ino: Evaluates the fan's response to different PWM values, monitoring its RPM to assess how quickly it adjusts to changes in PWM signals.
+- model_1.m: This MATLAB script calculates the transfer function and plots the step response for the first control strategy.
 
-This code implements the first control strategy:
-- **Strategy 1:** Maintains the fan off and varies the power delivered to the resistor.
+## Model 2
 
-### 3. `model_2.ino`
+### Second Approach: Maintain the fan off and vary the power delivered to the resistor
 
-This code implements the second control strategy:
-- **Strategy 2:** Keeps the power delivered to the resistor constant while adjusting the fan speed.
+- model_2.ino: Implements the logic for the second approach in Arduino.
+- model_2.m: This MATLAB script calculates the transfer function and plots the step response for the second control strategy.
+
+## Model 3
+
+### Third Approach: Keep the power delivered to the resistor constant while adjusting the fan speed
+
+- model_3.ino: Implements the logic for the third approach in Arduino.
+- model_3.m: This MATLAB script calculates the transfer function and plots the step response for the third control strategy.
 
 ## References
 
