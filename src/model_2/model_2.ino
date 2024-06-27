@@ -1,5 +1,6 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <PID_v1.h>
 
 // Pins
 #define TEMP_SENSOR_PIN 8  // Temperature sensor pin
