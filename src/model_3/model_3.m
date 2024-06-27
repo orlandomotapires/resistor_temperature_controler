@@ -3,11 +3,11 @@ s = tf('s');
 
 % PID controller parameters
 k = 1000;
-ki = 20;
-kd = 60000;
+ki = 200;
+kd = 100000;
 
 % Plant transfer function (system to be controlled)
-G = (0.00000961) / (s^2 + 0.002*s + 0.00000961);
+G = (0.00001089) / (s^2 + 0.003*s + 0.00001089);
 
 % PID controller transfer function
 Gc = k + (ki/s) + (kd*s);

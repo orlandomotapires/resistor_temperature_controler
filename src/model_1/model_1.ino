@@ -1,53 +1,60 @@
-#include <OneWire.h>
-#include <DallasTemperature.h>
-
 // Pins
-#define TEMP_SENSOR_PIN 8  // Temperature sensor pin
-#define MOSFET_PWM_PIN 5 // Mosfet PWM pin
+#define FAN_PWM_OUTPUT_PIN 3  // Pin where the PWM signal for the fan will be sent
+#define FAN_TACH_INPUT_PIN 2  // Tachometer pin
 
-// Setup a oneWire instance to communicate with any OneWire device
-OneWire oneWire(TEMP_SENSOR_PIN);
-
-// Pass our oneWire reference to Dallas Temperature.
-DallasTemperature sensors(&oneWire);
-
-// Global variables
-float desiredTemperature = 28.0;  // Initial desired temperature
-int pwmValue = 0;
+int pwmValue = 250;
+volatile unsigned long pulseCount = 0; // Pulse counter
+volatile unsigned long lastPulseTime = 0;
 
 void setup() {
   // Initialize serial communication
   Serial.begin(9600);
-
-  // Initialize the temperature sensor library
-  sensors.begin();
   
-  // Configure mosfet PWM pin as output
-  pinMode(MOSFET_PWM_PIN, OUTPUT);
+  // Configure PWM output pin for the fan
+  pinMode(FAN_PWM_OUTPUT_PIN, OUTPUT);
+
+  // Configure fan tachometer pin
+  pinMode(FAN_TACH_INPUT_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(FAN_TACH_INPUT_PIN), countPulse, RISING);
 }
 
 void loop() {
-  float temperatureC = getTemperature();
-  int pwmValueMosfet = calculatePwmValueMosfet(temperatureC);
+  checkSerialInput();
 
-  analogWrite(MOSFET_PWM_PIN, pwmValueMosfet);
+  delay(500);
 
-  // Send data to Serial Plotter
-  Serial.print("PWM Mosfet: ");
-  Serial.println(pwmValueMosfet);
+  unsigned long rpm = pulseCount * 11;
 
-  Serial.print("Sensor Temperature: ");
-  Serial.println(temperatureC);
+  Serial.print("Measured RPM: ");
+  Serial.println(rpm);
+  
+  Serial.print("Pulse count: ");
+  Serial.println(pulseCount);
 
-  delay(1000);
+  Serial.print("PWM Value: ");
+  Serial.println(pwmValue);
+
+  Serial.print("Estimated RPM: ");
+  Serial.println(map(pwmValue, 0, 255, 0, 2700));
+
+  pulseCount = 0;
+
+  analogWrite(FAN_PWM_OUTPUT_PIN, pwmValue);
 }
 
-float getTemperature() {
-  sensors.requestTemperatures();
-  return sensors.getTempCByIndex(0);
+void countPulse() {
+  pulseCount++;
 }
 
-int calculatePwmValueMosfet(float temperatureC) {
-  float tempDifference = desiredTemperature - temperatureC;
-  return constrain(map(tempDifference * 10, -100, 100, 0, 255), 0, 255);
+void checkSerialInput() {
+  if (Serial.available() > 0) {
+    int newValue = Serial.parseFloat();
+    if (newValue > 0 && newValue <= 255) {
+      pwmValue = newValue;
+      Serial.print("New PWM value: ");
+      Serial.println(pwmValue);
+    } else {
+      Serial.println("Invalid value for fan PWM.");
+    }
+  }
 }
