@@ -18,7 +18,7 @@ Among these methods, temperature regulation stands out as one of the most crucia
 **Figure 1:** Effect of temperature variation (T) on electrical resistance (R).
 
 <p align="center">
-  <img src="./assets/resistence_temperature_correlation.png" alt="Resistor Temperature Correlation">
+  <img src="./assets/resistence_temperature_relation.png" alt="Resistor Temperature Correlation">
 </p>
 
 ## Project Description
