@@ -6,7 +6,6 @@ This project aims to build an automatic controller for the temperature of a resi
 
 - Carlos Alberto Magalhães; [Github](https://github.com/ccasmmjr)
 - Eduardo Fiscina; [Github](https://github.com/duducaa)
-- Natalia Martins Dias Santos; [Github](https://github.com/Natalia)
 - Orlando Mota Pires; [Github](https://github.com/orlandomotapires)
 
 ## Theoretical Approach
